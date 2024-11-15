@@ -19,7 +19,7 @@ conn = sqlite3.connect('database.db')
 conn.execute("create table if not exists register(id integer primary key,email text unique,password text)")
 conn.close()
 
-
+#file type allow
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -28,6 +28,7 @@ GPSINFO_TAG = next(
     tag for tag, name in ExifTags.TAGS.items() if name == "GPSInfo"
 )
 
+#image coordinates cal
 def decimal_coords(coords, ref):
     decimal_degrees = float(coords[0]) + float(coords[1]) / 60 + float(coords[2]) / 3600
     if ref == "S" or ref =='W' :
@@ -38,7 +39,7 @@ def decimal_coords(coords, ref):
 def index():
     return render_template('index.html')
 
-
+#signup function
 @app.route('/signup',methods=['POST','GET'])
 def signup():
     if request.method=='POST':
@@ -57,7 +58,7 @@ def signup():
             return redirect('login')  
     return render_template("index.html")
 
-
+#login function
 @app.route('/login',methods=['POST','GET'])
 def login():
     if request.method=='POST':
@@ -78,6 +79,7 @@ def login():
             return redirect('login')
     return render_template("index.html")
 
+#logout function
 @app.route("/logout",methods=['POST','GET'])
 def logout():
     if request.method=='POST':
@@ -183,6 +185,8 @@ def save_image():
     except Exception as e:
         return jsonify({"message": "Error fetching image", "error": str(e)}), 500
     
+
+#upload function
 @app.route('/upload',methods=['POST','GET'])
 def upload_file():
     if request.method == 'POST':
