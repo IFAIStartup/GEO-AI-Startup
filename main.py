@@ -19,7 +19,7 @@ conn = sqlite3.connect('database.db')
 conn.execute("create table if not exists register(id integer primary key,email text unique,password text)")
 conn.close()
 
-#file type allow
+#file type
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
