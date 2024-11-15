@@ -1,0 +1,1088 @@
+<!doctype html>
+<html>
+
+<head>
+    <script
+        src="https://maps.gomaps.pro/maps/api/js?key=AlzaSyuwUX81Q1WGnVB2QNooID5P8-wv_D3t10p&libraries=places"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/CSS/main.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Marcellus&family=Michroma&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton+SC&family=Chela+One&family=Contrail+One&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Krona+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=RocknRoll+One&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <link rel="icon" href="/static/assets/Logo.png">
+    <title>GEO AI Platform</title>
+    <style>
+        a[href^="http://maps.google.com/maps"] {
+            display: none !important
+        }
+
+        a[href^="https://maps.google.com/maps"] {
+            display: none !important
+        }
+
+        .gmnoprint a,
+        .gmnoprint span,
+        .gm-style-cc {
+            display: none;
+        }
+
+        .gmnoprint div {
+            background: none !important;
+        }
+
+        #map {
+            height: 544px;
+            width: 928px;
+        }
+
+        .label {
+            position: absolute;
+            background-color: lightgrey;
+            padding: 3px;
+            font-weight: bold;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            white-space: nowrap;
+            display: block;
+            z-index: 100;
+        }
+
+        #objectsTable {
+            width: 50%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+
+        #objectsTable th {
+            background-color: #004bad7f;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+
+
+        #objectsTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        #objectsTable tr {
+            color: white;
+            cursor: pointer;
+        }
+
+        #objectsTable tr:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .highlight {
+            background-color: #00FF00;
+            color: black;
+        }
+
+        #coordinateForm {
+            display: none;
+        }
+
+
+        #categoryDropdown {
+            background-color: #004bad7f;
+            border: 1px solid white;
+            color: white;
+            font-weight: bold;
+            padding: 8px 10px;
+            border-radius: 7%;
+            margin-top: 15px;
+        }
+
+        #chooselabel {
+            color: white;
+
+        }
+
+        #resultTable {
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .anim {
+            position: absolute;
+            z-index: 10;
+            width: calc(100% + 100px);
+            animation: zoom-move 10s linear;
+        }
+
+        #blur.active,
+        #blur2.active {
+            filter: blur(10px);
+        }
+
+        .HIDDEN {
+            display: none;
+        }
+
+
+
+        @keyframes zoom-move {
+            13.33% {
+                transform: scale(1) translateX(-10px);
+                opacity: 1;
+            }
+
+            36.66% {
+                transform: scale(1.12) translateX(-20px);
+                opacity: 1;
+            }
+
+            66.66% {
+                transform: scale(1.14) translateX(-40px);
+                opacity: 1;
+            }
+
+            80.44% {
+                transform: scale(1.18) translateX(-60px);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.2) translateX(-80px);
+                opacity: 1;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="w-full bg-[url('static/assets/About.png')] bg-contain">
+    <div id="blur">
+        <div id="blur2">
+            <!-- Navbar -->
+
+            <div
+                class=" z-50 fixed w-full  md:py-3 py-2 md:px-4 lg:px-20 bg-[url('/static/assets/About.png')] bg-cover">
+                <nav class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <img class="h-10 w-10 md:h-12 md:w-12 md:h-16w-16" src="/static/assets/Logo.png" alt="">
+                        <h1
+                            class="px-1 text-white text-sm md:text-xl md:px-3 text-center md:tracking-widest font-Josefin ">
+
+                            <span class="tracking-widest md:tracking-longest"> IF AI STARTUP </span>
+                        </h1>
+                        <!-- <span class="text-[#bfe3ff] font-nunito"> </span><br>GEOAI  <span -->
+                    </div>
+                    <ul class="hidden md:flex md:space-x-14 md:text-white font-poppins font-bold">
+                        <li class="hover:text-[#bfe3ff] hover:translate-y-2 transform transition duration-700"><a
+                                href="#HOME">HOME</a></li>
+                        <li class="hover:text-[#bfe3ff] hover:translate-y-2 transform transition duration-700"><a
+                                href="#ABOUT">ABOUT</a></li>
+                        <li class="hover:text-[#bfe3ff] hover:translate-y-2 transform transition duration-700"><a
+                                href="#EXPLORE">EXPLORE</a></li>
+                    </ul>
+
+                    <div class="text-black hidden md:block ">
+                        <a id="logoutBtn1"
+                            class="hidden px-2 mx-2 py-1 bg-yellow-400 border-2 rounded-full border-none hover:translate-y-2 transform duration-200 "
+                            href="/logout" method="POST">log out</a>
+                        <a onclick="toggle()" id="loginBtn2"
+                            class="px-2 mx-2 py-1 bg-yellow-400 border-2 rounded-full border-none " href="#login"> Log
+                            in </a>
+                        <a onclick="toggle()" id="signupBtn2"
+                            class="px-2 mx-2 py-1 bg-yellow-400 border-2 rounded-full border-none hover:translate-y-2 transform duration-200 "
+                            href="#signup">Signup</a>
+
+                    </div>
+                    <!-- navbar mobile view -->
+                    <ul id="menu"
+                        class="hidden  transform transition duration-500 text-white absolute w-full right-0 top-14 z-50 text-1xl space-y-5 py-8 text-center bg-[url('/static/assets/About.png')] h-cover bg-right bg-cover md:hidden">
+                        <li class="pt-30 transform transition duration-200 hover:bg-white hover:text-black"><a
+                                href="#HOME">HOME</a>
+                        </li>
+                        <li class="transform transition duration-500 hover:bg-white hover:text-black"><a
+                                href="#ABOUT">ABOUT</a>
+                        </li>
+                        <li class="transform transition duration-500 hover:bg-white hover:text-black"><a
+                                href="#EXPLORE">EXPLORE</a>
+                        </li>
+                        <a id="logoutBtn2"
+                            class="hidden max-w-full mx-32 py-1 text-black bg-yellow-400 border-2 rounded-full border-none hover:translate-y-2 transform duration-200 "
+                            href="/logout" method="POST">Log out</a>
+                        <div class="  text-black pt-3">
+                            <a onclick="toggle()" id="loginBtn3"
+                                class="px-2 mx-2 py-1 bg-yellow-400 border-2 rounded-full border-none " href="#login">
+                                Log
+                                in </a>
+                            <a onclick="toggle()" id="signupBtn3"
+                                class="px-2 mx-2 py-1 bg-yellow-400 border-2 rounded-full border-none hover:translate-y-2 transform duration-200 "
+                                href="#signup">Signup</a>
+                        </div>
+                    </ul>
+                    <img id="hamburger" class="md:hidden text-white z-20 w-12 px-2"
+                        src="/static/assets/hamburger_icon.png" />
+                </nav>
+            </div>
+
+
+            <!-- Carousel -->
+            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
+                        aria-label="Slide 4"></button>
+                </div>
+                <div id="HOME" class="carousel-inner">
+                    <!-- Home Page -->
+                    <div
+                        class="carousel-item active  h-screen bg-[url('/static/assets/home-earth.png')] bg-center bg-cover">
+                        <div class="text-white  h-full ">
+                            <div class=" flex items-center flex-col mt-36 ">
+                                <h1
+                                    class="z-20 text-1xl md:text-1xl lg:font-Michroma md:font-Michroma font-Michroma md:tracking-widest  animate__animated animate__zoomIn animate__slower animate__delay-1.5s">
+                                    OBJECT DETECTION</h1>
+                                <h2
+                                    class="z-20 text-4xl md:text-4xl font-Prompt pt-1 md:pt-3 lg:pt-2  md:tracking-widest  animate__animated animate__zoomIn animate__slower animate__delay-1.5s">
+                                    G E O A I</h1>
+                            </div>
+                            <div class="flex justify-end md:justify-center md:pl-80 lg:pl-80 pl-40">
+                                <img src="/static/assets/satellite.png" class="anim w-64 md:w-80 lg:w-80 xl:w-96"
+                                    alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 1 -->
+                    <div class="carousel-item  h-screen bg-[url('/static/assets/slide1_bg.png')] bg-center bg-cover">
+                        <div class="h-full flex flex-col justify-between lg:space-y-40 md:space-y-24 py-10">
+                            <div class="flex flex-col items-center mt-32 lg:mt-36">
+                                <h1
+                                    class="text-2xl text-white md:text-3xl lg:text-5xl font-Krona md:pb-3  animate__animated  animate__fadeInLeft animate__delay-1s  ">
+                                    Technology</h1>
+                                <h1
+                                    class="text-2xl text-yellow-400 font-Krona md:text-4xl lg:text-6xl  animate__animated  animate__fadeInRight animate__delay-1s">
+                                    Change The Future</h1>
+                            </div>
+                            <div class="hidden font-Chela md:flex items-center justify-evenly px-10 text-white">
+                                <div class="text-center">
+                                    <p class="text-[#EFCB48]">Python</p>
+                                    <img class="w-36 hover:translate-y-3 transition-all duration-500"
+                                        src="/static/assets/Python logo.png" alt="" />
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-[#7d12f8]">Bootstrap</p>
+                                    <img class="w-36 hover:translate-y-3 transition-all duration-500"
+                                        src="/static/assets/bootstrap_logo.png" alt="" />
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-[#27a562]">Google Map</p>
+                                    <img class="w-36 hover:translate-y-3 transition-all duration-500"
+                                        src="/static/assets/Google Map logo.png" alt="" />
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-[#a9d1ef]">Deep Learning</p>
+                                    <img class="w-36 hover:translate-y-3 transition-all duration-500"
+                                        src="/static/assets/Deep learning.png" alt="" />
+                                </div>
+                            </div> --
+                            <!-- mobile view -->
+                            <div class="flex justify-between pt-14 px-10 text-white md:hidden">
+                                <div class="font-Chela">
+                                    <div class="flex flex-col justify-center items-center">
+                                        <img class="w-20" src="/static/assets/Python logo.png" alt="" />
+                                        <p class="text-[#EFCB48]">Python</p>
+                                    </div>
+
+                                    <div class="flex flex-col justify-center items-center">
+                                        <img class="w-20" src="/static/assets/bootstrap_logo.png" alt="" />
+                                        <p class="text-[#7d12f8]">Bootstrap</p>
+                                    </div>
+                                </div>
+                                <div class="font-Chela">
+                                    <div class="flex flex-col justify-center items-center">
+                                        <img class="w-20" src="/static/assets/Google Map logo.png" alt="" />
+                                        <p class="text-[#27a562]">Google Map</p>
+                                    </div>
+                                    <div class="flex flex-col justify-center items-center">
+                                        <img class="w-20" src="/static/assets/Deep learning.png" alt="" />
+                                        <p class="text-[#a9d1ef]">Deep Learning</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- slide-2 -->
+                    <div class="carousel-item  h-screen bg-[url('/static/assets/slide2_bg.png')] bg-center bg-cover">
+                        <div class="h-full flex flex-col justify-between md:space-y-20 lg:space-y-28 ">
+                            <div class="hidden md:block">
+                                <div class="hidden  md:flex items-start md:mt-24 lg:mt-24 h-full justify-center ">
+                                    <div class="flex flex-col items-center text-center text-white">
+                                        <img class="md:w-44 lg:w-60" src="/static/assets/Logo.png" alt="">
+                                        <p
+                                            class="uppercase font-Poppins lg:text-base text-[#32b7ff] animate__animated  animate__fadeInLeft animate__delay-1s">
+                                            innovation floor</p>
+                                        <h2
+                                            class="uppercase font-Marcellus lg:text-4xl animate__animated  animate__fadeInRight animate__delay-1s">
+                                            AI STARTUP</h2>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between h-full">
+                                    <div class="absolute top-56 lg:top-44 md:left-16 lg:left-20">
+                                        <img class="md:w-52 lg:w-72" src="/static/assets/slide2_letter.png">
+
+                                    </div>
+                                    <div class="absolute md:top-28 lg:top-32 lg:mx-3 md:right-16 md:mx-2 lg:right-20">
+                                        <img class="md:w-44 w-60 lg:w-52" src="/static/assets/Robot-PNG-Image-HD.png">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Mobile View -->
+                            <div
+                                class=" md:hidden h-full flex flex-col    justify-between space-y-5 py-3 items-center  ">
+
+                                <div
+                                    class=" flex flex-col items-center font-Poppins uppercase text-center  text-white mt-10">
+                                    <img class="w-36" src="/static/assets/Logo.png">
+                                    <p
+                                        class="uppercase font-Poppins text-sm text-[#32b7ff] animate__animated  animate__fadeInLeft animate__delay-1s">
+                                        innovation floor</p>
+                                    <h2
+                                        class="uppercase font-Marcellus text-3xl animate__animated  animate__fadeInRight animate__delay-1s">
+                                        AI STARTUP</h2>
+
+                                </div>
+                                <div class="flex justify-between items-center px-4">
+                                    <img class="w-32 " src="/static/assets/slide2_letter.png">
+                                    <img class="w-44 -mx-2 " src="/static/assets/robot mobile-view.png">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Slide 3 -->
+                    <div class="carousel-item   h-screen bg-[url('/static/assets/slide3_bg.png')]  bg-right bg-cover">
+                        <div
+                            class="flex flex-col justify-evenly pt-10 h-full items-center space-y-20  md:flex md:justify-evenly md:-space-y-10 md:mt-10 lg:mt-5 lg:pt-2 lg:px-32 w-full  md:px-16  bg-black bg-opacity-60">
+                            <div
+                                class="mt-2 h-[27vh] mx-4 px-2 transition-all duration-200 hover:-translate-y-3 hover:shadow-2xl flex flex-col justify-center  border-0 rounded-lg shadow-xl md:w-[50%] lg:w-[50%] xl:w-[30%] md:leading-loose md:h-[35vh] cursor-pointer overflow-hidden bg-black bg-opacity-50">
+                                <h1
+                                    class=" text-center md:pb-3 font-bold text-3xl text-white font-RocknRoll uppercase md:text-5xl ">
+                                    Object detection</h1>
+                                <h3 class=" text-2xl text-yellow-400 text-center font-josefin">With Corresponding
+                                    Coordinates
+                                </h3>
+                            </div>
+                            <div>
+                                <img class="w-60 border-2 border-zinc-950 lg:w-80 md:hidden shadow-xl"
+                                    src="/static/assets/slide3_bg.png" alt="" />
+
+                            </div>
+                            <div class=" md:px-7 text-white">
+                                <p class="hidden font-Poppins md:block md:text-1xl md:leading-relaxed">
+                                    Object detection in satellite and aerial imagery involves identifying various
+                                    objects such as buildings, roads, farms ,trees and tracks.The model not only
+                                    identifies
+                                    objects
+                                    but also returns their precise location within the image in the form of bounding
+                                    boxes.
+                                    By
+                                    georeferencing, the pixel coordinates are mapped to real-world coordinates (latitude
+                                    and
+                                    longitude).
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Carousel Buttons -->
+                <button class="carousel-control-prev z-10" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next z-10" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+
+            <!-- About -->
+
+            <div id="ABOUT" class="w-full h-full">
+                <div
+                    class="w-full   md:pt-2 pt-5 h-full flex flex-col text-center lg:flex lg:flex-row lg:justify-center lg:items-center ">
+                    <div
+                        class="  lg:px-8 md:pt-8 lg:w-[65%]   pt-20  lg:pt-0  lg:text-left lg:flex  lg:flex-col items-center">
+                        <h5 class="   text-2xl pb-2 font-Krona text-yellow-400 font-bold lg:text-4xl"> What is GEO AI ?
+                        </h5>
+                        <p class=" md:text-xl  text-white px-2 text-sm font-Poppins text-justify  lg:py-2  lg:text-2xl">
+                            Geospatial Artificial Intelligence is the application of artificial intelligence (AI)
+                            fused with geospatial data, science, and technology to accelerate real-world understanding
+                            of
+                            business opportunities, environmental impacts, and operational risks. Organizations are
+                            modernizing operations to run at scale through automated data generation and approachable
+                            spatial tools and algorithms.
+                        </p>
+                    </div>
+                    <div class="lg:px-8 lg:justify-end justify-center flex   ">
+                        <img class=" w-60 lg:w-full   md:w-[56%] " src="/static/assets/geoai-banner.png" alt="" />
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Map -->
+            <div id="EXPLORE" class="w-full md:h-full md:overflow-hidden overflow-x-scroll">
+                <div class=" h-full flex flex-col items-center">
+                    <div id="map">
+                    </div>
+                </div>
+            </div>
+            <div id="RESULT" class="w-full h-full">
+                <div class=" h-full flex flex-col items-center">
+                    <div class="flex">
+                        <a onclick="toggle()" id="loginBtn"
+                            class=" bg-[#004bad7f] hover:bg-blue-700 text-white font-bold py-2 px-2 mx-2 md:px-4 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md mt-12"
+                            href="#login"> Login to detect
+                        </a>
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category,message in messages %}
+                        {% if category == 'success'%}
+                        <script>document.querySelector("#loginBtn").classList.toggle('hidden')
+                            document.querySelector("#loginBtn2").classList.toggle('hidden')
+                            document.querySelector("#loginBtn3").classList.toggle('hidden')
+                            document.querySelector("#signupBtn2").style.display = 'none'
+                            document.querySelector("#signupBtn3").style.display = 'none'
+                            document.querySelector("#logoutBtn1").style.display = 'block'
+                            document.querySelector("#logoutBtn2").style.display = 'block'
+                        </script>
+                        <button id="detectButton2"
+                            class="bg-[#004bad7f] hover:bg-blue-700  text-white font-bold py-2 px-4 mx-4 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md mt-1">
+                            Detect
+                        </button>
+                        <button id="detectButton1"
+                            class="bg-[#004bad7f] hidden hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md mt-1">
+                            Detect
+                        </button>
+                        <button id="satelliteButton"
+                            class="bg-[#004bad7f] hidden hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md mt-1">
+                            Satellite
+                        </button>
+                        <button id="removeButton"
+                            class="bg-[#004bad7f] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md mt-1">
+                            Remove
+                        </button>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div id="upload">
+                        <form id="uploadForm" enctype="multipart/form-data">
+                            <label id="chooselabel"
+                                class="md:mb-4 border-2 border-white border-solid hover:bg-[#004bad7f]  px-6 py-2 mt-1 rounded-full md:mt-2 transform transition duration-500 shadow-md"
+                                for="fileInput">Choose</label>
+                            <input id="fileInput" type="file" name="file" class="hidden">
+                            <button
+                                class="bg-[#004bad7f] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 mt-1 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md"
+                                type="submit" id="upload" value="submit">Upload</button>
+                        </form>
+                        <form id="coordinateForm"
+                            class="bg-[#004bad7f] text-white font-bold py-2 px-4 mx-4 border border-blue-700 rounded md:mx-14 transform transition duration-500 shadow-md mt-5">
+                            <label for="latitude">Latitude:</label>
+                            <input class="rounded text-black" type="text" id="latitude" name="latitude" required>
+                            <label for="longitude">Longitude:</label>
+                            <input class="rounded text-black" type="text" id="longitude" name="longitude" required>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                    <div id="labelsContainer"></div>
+                    <div id="resultTable" class="w-full mt-5 px-2">
+                        <table id="objectsTable">
+                            <thead>
+                                <tr>
+                                    <th>Object Type</th>
+                                    <th>Coordinates</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- login page -->
+    <div id="login"
+        class="HIDDEN fixed  top-0 left-0 w-full  h-full z-10    font-poppins items-center justify-center bg-transparent ">
+
+
+        <div class="h-screen w-screen flex justify-center items-center">
+            <div class="grid gap-8">
+                <div id="back-div" class=" border-1 border-[#32b7ff] bg-[#004bad7f] rounded-[26px] md:w-full m-4">
+                    <div
+                        class="h-fit md:h-auto border-[20px] border-transparent rounded-[20px] bg-blue shadow-lg xl:p-10 2xl:p-10 lg:p-10 md:p-10 sm:p-2 m-2">
+                        <h1
+                            class="pt-2  font-bold text-white md:text-5xl md:pt-8 md:pb-6 text-3xl text-center cursor-default">
+                            Log in
+                        </h1>
+                        <form action="/login" method="POST" autocomplete="off" class="space-y-4">
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            {% for category,message in messages %}
+                            {% if category == 'danger' %}
+                            <div
+                                class="text-red-600 text-center font-bold font-Poppins  animate__animated animate__fadeOut animate__slower">
+                                {{message}}</div>
+                            <script>document.getElementById('login').style.display = 'flex';
+                                document.getElementById("blur").classList.toggle("active");
+                            </script>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+
+                            <div>
+                                <label for="email" class="md:mb-2  text-white text-lg">Email</label>
+                                <input id="email"
+                                    class=" form-control border  shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                                    type="email" name="email" placeholder="Email" required />
+                            </div>
+                            <div>
+                                <label for="password" class=" md:mb-2 text-white text-lg">Password</label>
+                                <input id="password"
+                                    class="form-control border shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                                    type="password" name="password" placeholder="Password" required />
+                            </div>
+                            <button id="log"
+                                class="bg-[#004bad7f] border-1 border-[#32b7ff] shadow-lg mt-4  text-white rounded-lg py-2 w-full hover:scale-105  transition duration-300 ease-in-out"
+                                type="submit">
+                                LOG IN
+                            </button>
+                        </form>
+                        <div class="flex flex-col mt-2 items-center justify-center text-sm">
+                            <h3 class="text-white">
+                                Don't have an account?
+                                <a id="signupBtn" class="group text-blue-400 transition-all duration-100 ease-in-out"
+                                    href="#signup">
+                                    <span
+                                        class="bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+                                        Sign Up
+                                    </span>
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- signup page -->
+    <div id="signup"
+        class=" HIDDEN  fixed top-0 left-0 w-full  h-full z-10    font-poppins items-center justify-center bg-transparent">
+        <div class="h-screen w-screen flex justify-center items-center">
+            <div class="grid gap-8">
+                <div id="back-div" class=" border-1 border-[#32b7ff] md:w-full  bg-[#004bad7f] rounded-[26px] m-4">
+                    <div
+                        class="border-[20px] border-transparent h-fit md:h-auto rounded-[20px] bg-blue shadow-lg xl:p-10 2xl:p-10 lg:p-10 md:p-10 sm:p-2 m-2">
+                        <h1
+                            class="pt-2  font-bold text-white md:text-5xl md:pt-8 md:pb-6 text-3xl text-center cursor-default">
+                            Signup
+                        </h1>
+                        <form action="/signup" method="POST" autocomplete="off" class="space-y-4">
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            {% for category,message in messages %}
+                            {% if category == 'error'%}
+                            <div
+                                class="text-red-600 text-center font-bold font-Poppins  animate__animated animate__fadeOut animate__slower">
+                                {{message}}</div>
+                            <script>document.getElementById('signup').style.display = 'flex';
+                                document.getElementById("blur").classList.toggle("active")
+                            </script>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            {% for category,message in messages %}
+                            {% if category == 'success_signup'%}
+                            <div
+                                class="text-red-600 text-center font-bold font-Poppins  animate__animated animate__fadeOut animate__slower">
+                                {{message}}</div>
+                            <script>document.getElementById('login').style.display = 'flex';
+                                document.getElementById("blur").classList.toggle("active")
+                            </script>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+
+                            <div>
+                                <label for="email" class="mb-2  text-white text-lg">Email</label>
+                                <input id="email"
+                                    class="form-control border  shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                                    type="email" name="email" placeholder="Email" required />
+                            </div>
+                            <div>
+                                <label for="password" class="mb-2 text-white text-lg"> Password</label>
+                                <input id="password"
+                                    class="form-control border  shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
+                                    type="password" name="password" placeholder="Create Password" required />
+                            </div>
+                            <button
+                                class="bg-[#004bad7f] border-1 border-[#32b7ff] shadow-lg mt-4 py-2 w-full text-white rounded-lg  hover:scale-105 hover:from-black hover:to-blue-500 transition duration-300 ease-in-out"
+                                type="submit">
+                                Signup
+                            </button>
+
+                        </form>
+                        <div class="flex flex-col mt-2 items-center justify-center text-sm">
+                            <h3 class="text-white">
+
+                                <a id="removeBlur" class="group text-blue-400 transition-all duration-100 ease-in-out"
+                                    href="#HOME">
+                                    <span
+                                        class="bg-left-bottom bg-gradient-to-r from-[#004bad7f] to-[#32b7ff] bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+                                        Home
+                                    </span>
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        var map;
+        let streetViewPanorama;
+        let detectedObjects = [];
+        let rectangles = [];
+        let currentHighlightType = null;
+        let infoWindow;
+        let labelsArray = [];
+        let rectlabel = [];
+        let overlays = [];
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 10.813377, lng: 79.837944 },
+                zoom: 19,
+                mapTypeId: 'satellite',
+                mapTypeControl: false,
+                streetViewControl: false,
+            });
+            rectangle = new google.maps.Rectangle({
+                strokeColor: "#3b82f6",
+                strokeOpacity: 0.8,
+                strokeWeight: 5,
+                draggable: true,
+                map,
+            });
+
+            map.addListener("bounds_changed", () => {
+                rectangle.setBounds(map.getBounds());
+            });
+
+            document.getElementById('detectButton2').addEventListener('click', detectObjects);
+            document.getElementById('removeButton').addEventListener('click', removeAll);
+
+            streetViewPanorama = new google.maps.StreetViewPanorama(document.getElementById('map'), {
+                position: { lat: 10.813377, lng: 79.837944 },
+                pov: { heading: 0, pitch: 0 },
+                zoom: 1,
+                visible: false
+            });
+
+            map.addListener('click', function (event) {
+                streetViewPanorama.setPosition(event.latLng);
+                streetViewPanorama.setVisible(true);
+                document.getElementById('detectButton2').style.display = 'none';
+                document.getElementById('detectButton1').style.display = 'block';
+                document.getElementById('satelliteButton').style.display = 'block';
+                document.getElementById('removeButton').style.display = 'block';
+            });
+
+            document.getElementById('detectButton1').addEventListener('click', function () {
+                const lat = streetViewPanorama.getPosition().lat();
+                const lng = streetViewPanorama.getPosition().lng();
+                const pitch = streetViewPanorama.getPov().pitch;
+                const heading = streetViewPanorama.getPov().heading;
+                const fov = 90;
+                const zoom = streetViewPanorama.getZoom();
+
+                fetch('/360-detect', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ lat, lng, pitch, heading, fov, zoom }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+
+            document.getElementById('satelliteButton').addEventListener('click', function () {
+                map.setMapTypeId('satellite');
+                streetViewPanorama.setVisible(false);
+                document.getElementById('satelliteButton').style.display = 'none';
+                document.getElementById('detectButton1').style.display = 'none';
+                document.getElementById('detectButton2').style.display = 'block';
+            });
+
+            infoWindow = new google.maps.InfoWindow();
+
+            document.getElementById('uploadForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const fileInput = document.getElementById('fileInput');
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        alert(data.message);
+                        const detectcoords = data.objects;
+
+                        detectcoords.forEach((obj) => {
+                            const latLng = new google.maps.LatLng(obj.lat, obj.lng);
+                            map.panTo(latLng);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+                document.getElementById('coordinateForm').style.display = 'block';
+            });
+        }
+        document.getElementById("coordinateForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const latitude = parseFloat(document.getElementById("latitude").value);
+            const longitude = parseFloat(document.getElementById("longitude").value);
+
+            const latLng = new google.maps.LatLng(latitude, longitude);
+            map.panTo(latLng);
+        });
+
+        function detectObjects() {
+            const bounds = rectangle.getBounds();
+            const northEast = bounds.getNorthEast();
+            const southWest = bounds.getSouthWest();
+            const zoom = map.getZoom();
+
+            const selectedArea = {
+                north: northEast.lat(),
+                south: southWest.lat(),
+                east: northEast.lng(),
+                west: southWest.lng(),
+                zoom: zoom,
+            };
+
+            fetch('/satellite-detect', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(selectedArea),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    detectedObjects = data.objects;
+
+                    document.getElementById('tableBody').innerHTML = '';
+                    document.getElementById('labelsContainer').innerHTML = '';
+
+                    rectlabel.forEach(labelrec => labelrec.remove());
+                    rectangles.forEach(rectangle => rectangle.setMap(null));
+                    rectangles = [];
+                    rectlabel = [];
+                    overlays = [];
+                    currentHighlightType = null;
+                    document.getElementById('resultTable').style.display = 'flex';
+
+
+                    const uniqueTypes = new Set();
+
+                    detectedObjects.forEach((obj, index) => {
+                        const rectangle = new google.maps.Rectangle({
+                            bounds: {
+                                north: obj.north,
+                                south: obj.south,
+                                east: obj.east,
+                                west: obj.west,
+                            },
+                            editable: false,
+                            draggable: false,
+                            strokeColor: "#C309FA",
+                            strokeWeight: 2,
+                            map: map,
+                        });
+
+                        rectangles.push(rectangle);
+
+                        rectangle.addListener('click', function () {
+                            const content = `<p>${obj.name}: (${obj.lat.toFixed(6)}, ${obj.lng.toFixed(6)})</p>`;
+                            infoWindow.setContent(content);
+                            infoWindow.setPosition(new google.maps.LatLng(obj.lat, obj.lng));
+                            infoWindow.open(map);
+                        });
+
+                        let labelrec = document.createElement('div');
+                        labelrec.className = 'label';
+                        labelrec.innerText = `${obj.name}: ${obj.conf.toFixed(2)}%`;
+                        labelrec.style.display = 'block';
+
+                        let labelPosition = {
+                            lat: obj.north,
+                            lng: (obj.east + obj.west) / 2,
+                        };
+                        rectlabel.push(labelrec);
+
+                        let overlay = new google.maps.OverlayView();
+                        overlay.onAdd = function () {
+                            const pane = this.getPanes().overlayLayer;
+                            pane.appendChild(labelrec);
+                        };
+                        overlay.draw = function () {
+                            const projection = this.getProjection();
+                            const pos = projection.fromLatLngToDivPixel(labelPosition);
+                            labelrec.style.left = `${pos.x}px`;
+                            labelrec.style.top = `${pos.y}px`;
+                        };
+                        overlay.setMap(map);
+                        overlays.push(overlay);
+
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${obj.type}</td><td>(${obj.lat.toFixed(6)}, ${obj.lng.toFixed(6)})</td>`;
+                        row.addEventListener('click', () => {
+                            highlightRectangle(index);
+                        });
+                        document.getElementById('tableBody').appendChild(row);
+                        uniqueTypes.add(obj.type);
+                    });
+
+                    const labels = ["None", ...uniqueTypes];
+                    const labelsContainer = document.getElementById('labelsContainer');
+                    labelsContainer.innerHTML = '';
+
+                    const dropdown = document.createElement('select');
+                    dropdown.id = 'categoryDropdown';
+
+                    labels.forEach(label => {
+                        const option = document.createElement('option');
+                        option.value = label;
+                        option.textContent = label;
+                        dropdown.appendChild(option);
+                    });
+
+                    labelsContainer.appendChild(dropdown);
+
+                    dropdown.addEventListener('change', () => {
+                        const selectedLabel = dropdown.value;
+                        toggleHighlight(selectedLabel);
+                    });
+
+                    document.getElementById('removeButton').style.display = 'block';
+                });
+        }
+
+        function removeAll() {
+            document.getElementById('resultTable').style.display = 'none';
+            rectangles.forEach(rectangle => rectangle.setMap(null));
+            document.getElementById('tableBody').innerHTML = '';
+            document.getElementById('labelsContainer').innerHTML = '';
+            rectangles = [];
+            rectlabel.forEach(labelrec => labelrec.remove());
+            overlays.forEach(overlay => overlay.setMap(null));
+            overlays = [];
+            currentHighlightType = null;
+            document.getElementById('coordinateForm').style.display = 'none';
+            document.getElementById('removeButton').style.display = 'none';
+        }
+
+        function highlightRectangle(index) {
+
+            rectangles.forEach(rectangle => {
+                rectangle.setOptions({ strokeColor: '#C309FA', strokeOpacity: 1.0 });
+            });
+
+
+            const selectedRectangle = rectangles[index];
+            selectedRectangle.setOptions({ strokeColor: '#00FF00', strokeOpacity: 1.0 });
+            map.panTo(selectedRectangle.getBounds().getCenter());
+        }
+
+        function toggleHighlight(selectedLabel) {
+            if (selectedLabel === "None") {
+                rectangles.forEach((rectangle) => {
+                    rectangle.setOptions({ strokeColor: '#C309FA', strokeOpacity: 1.0 });
+                });
+                rectlabel.forEach(labelrec => {
+                    labelrec.style.display = 'block';
+                });
+                currentHighlightType = null;
+            } else {
+                if (currentHighlightType === selectedLabel) {
+                    rectangles.forEach((rectangle) => {
+                        rectangle.setOptions({ strokeColor: '#FF0000', strokeOpacity: 0.5 });
+                    });
+                    rectlabel.forEach(labelrec => {
+                        labelrec.style.display = 'block';
+                    });
+                    currentHighlightType = null;
+                } else {
+                    rectangles.forEach((rectangle, index) => {
+                        if (detectedObjects[index].type === selectedLabel) {
+                            rectangle.setOptions({ strokeColor: '#00FF00', strokeOpacity: 1.0 });
+                            rectlabel[index].style.display = 'block';
+                        } else {
+                            rectangle.setOptions({ strokeColor: '#FF0000', strokeOpacity: 0 });
+                            rectlabel[index].style.display = 'none';
+                        }
+                    });
+                    currentHighlightType = selectedLabel;
+                }
+            }
+        }
+
+        window.onload = initMap;
+
+        // Hamburger menu functionality
+        const hamburger = document.querySelector("#hamburger");
+        const menu = document.querySelector("#menu");
+        const login = document.querySelector("#login")
+        const loginBtn = document.querySelector("#loginBtn")
+        const signup = document.querySelector("#signup")
+        const signupBtn = document.querySelector("#signupBtn")
+        const removeBlur = document.querySelector("#removeBlur")
+        const blur = document.querySelector("#blur")
+        const loginRemove = document.querySelector(".loginRemove ")
+        const loginBtn2 = document.querySelector("#loginBtn2")
+        const loginBtn3 = document.querySelector("#loginBtn3")
+        const signupBtn2 = document.querySelector("#signupBtn2")
+        const signupBtn3 = document.querySelector("#signupBtn3")
+
+
+
+
+
+        signupBtn.addEventListener("click", () => {
+            login.style.display = "none"
+        })
+
+
+        removeBlur.addEventListener("click", () => {
+            signup.style.display = "none"
+        })
+
+
+        removeBlur.addEventListener("click", () => {
+            login.style.display = "HIDDEN"
+        })
+
+        loginBtn2.addEventListener("click", () => {
+            login.style.display = "flex"
+
+        })
+
+        loginBtn3.addEventListener("click", () => {
+            login.style.display = "flex"
+
+        })
+
+
+
+        function toggle2() {
+            const blur = document.querySelector("#blur2")
+            blur.classList.toggle("active")
+        }
+
+        function toggle() {
+            const blur = document.querySelector("#blur")
+            blur.classList.toggle("active")
+        }
+
+        loginBtn.addEventListener("click", () => {
+            login.style.display = "flex"
+
+        })
+        removeBlur.addEventListener("click", () => {
+            blur.classList.toggle("active")
+
+        })
+
+
+
+        signupBtn.addEventListener("click", () => {
+            signup.style.display = "flex"
+
+        })
+
+        signupBtn2.addEventListener("click", () => {
+            signup.style.display = "flex"
+
+        })
+
+        signupBtn3.addEventListener("click", () => {
+            signup.style.display = "flex"
+
+        })
+
+        hamburger.addEventListener("click", () => {
+            menu.classList.toggle("hidden");
+        });
+
+        menu.addEventListener("click", () => {
+            menu.classList.toggle("hidden");
+        });
+
+    </script>
+
+
+</body>
+
+</html>
