@@ -17,9 +17,9 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 model1 = YOLO('satellite.pt')
 model2=YOLO('360view.pt')
-model1.cpu()
-model2.cpu()
-
+conn = sqlite3.connect('database.db')
+conn.execute("create table if not exists register(id integer primary key,email text unique,password text)")
+conn.close()
 
 #allowextension function
 def allowed_file(filename):
