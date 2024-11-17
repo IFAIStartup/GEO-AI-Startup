@@ -6,18 +6,20 @@ from flask import Flask, render_template, request, jsonify,flash,redirect,url_fo
 import sqlite3
 import os
 from werkzeug.utils import secure_filename
+import torch
+torch.cuda.empty_cache()
 
 app = Flask(__name__)
-app.secret_key="12345"
+app.secret_key="4TuBbgTs1T8ILHrNOcacw8eLwXZhsaQP"
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 model1 = YOLO('satellite.pt')
 model2=YOLO('360view.pt')
-conn = sqlite3.connect('database.db')
-conn.execute("create table if not exists register(id integer primary key,email text unique,password text)")
-conn.close()
+model1.cpu()
+model2.cpu()
+
 
 #allowextension function
 def allowed_file(filename):
@@ -52,7 +54,7 @@ def signup():
             conn.commit()
             flash("Signup successfully","success_signup")
         except:
-            flash("Error in signup try again","error")
+            flash("Account already exists","error")
         finally:
             conn.close()
             return redirect('login')  
@@ -75,7 +77,7 @@ def login():
             flash("login successfully","success")
             return redirect('/')
         else:
-            flash("Incorrect login","danger")
+            flash("Incorrect email or password","danger")
             return redirect('login')
     return render_template("index.html")
 
@@ -118,13 +120,12 @@ def perform_detection(image_bytes, bounds):
 
     image = Image.open(io.BytesIO(image_bytes))
 
-    results = model1(image,save=True,exist_ok=True,project='static',imgsz=928,conf=0.30)
+    results = model1(image,exist_ok=True,project='static',imgsz=928,conf=0.30)
 
     north, south, east, west = bounds['north'], bounds['south'], bounds['east'], bounds['west']
     img_width,img_height=image.size
 
     detected_objects = []
-    counts={}
     for result in results:
         for obj in result.boxes.data:
             x_min, y_min, x_max, y_max, confidence, class_idx = obj
@@ -222,4 +223,4 @@ def upload_file():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True)
+    app.run()
