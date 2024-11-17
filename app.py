@@ -6,6 +6,8 @@ from flask import Flask, render_template, request, jsonify,flash,redirect,url_fo
 import sqlite3
 import os
 from werkzeug.utils import secure_filename
+import torch
+torch.cuda.empty_cache()
 
 app = Flask(__name__)
 app.secret_key="12345"
@@ -15,6 +17,8 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 model1 = YOLO('satellite.pt')
 model2=YOLO('360view.pt')
+model1.cpu()
+model2.cpu()
 conn = sqlite3.connect('database.db')
 conn.execute("create table if not exists register(id integer primary key,email text unique,password text)")
 conn.close()
