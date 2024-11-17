@@ -17,9 +17,7 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 model1 = YOLO('satellite.pt')
 model2=YOLO('360view.pt')
-conn = sqlite3.connect('database.db')
-conn.execute("create table if not exists register(id integer primary key,email text unique,password text)")
-conn.close()
+
 
 #allowextension function
 def allowed_file(filename):
@@ -120,7 +118,7 @@ def perform_detection(image_bytes, bounds):
 
     image = Image.open(io.BytesIO(image_bytes))
 
-    results = model1(image,exist_ok=True,project='static',imgsz=928,conf=0.30)
+    results = model1(image,imgsz=928,conf=0.30)
 
     north, south, east, west = bounds['north'], bounds['south'], bounds['east'], bounds['west']
     img_width,img_height=image.size
