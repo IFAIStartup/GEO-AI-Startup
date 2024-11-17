@@ -1,3 +1,4 @@
 ﻿flask
-ultralytics --no-cache-dir
+ultralytics
+
 
