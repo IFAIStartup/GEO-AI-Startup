@@ -7,6 +7,7 @@ import sqlite3
 import os
 from werkzeug.utils import secure_filename
 import torch
+import uvicorn
 torch.cuda.empty_cache()
 
 app = Flask(__name__)
@@ -221,4 +222,4 @@ def upload_file():
 
 
 if __name__ == '__main__':
-    app.run()
+    uvicorn.run("app:app", host="0.0.0.0", port=8080)
