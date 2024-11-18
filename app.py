@@ -6,9 +6,11 @@ from flask import Flask, render_template, request, jsonify,flash,redirect,url_fo
 import sqlite3
 import os
 from werkzeug.utils import secure_filename
+from ultralytics import YOLO
 import torch
-torch.cuda.empty_cache()
-torch.no_grad()
+
+
+
 
 app = Flask(__name__)
 app.secret_key="4TuBbgTs1T8ILHrNOcacw8eLwXZhsaQP"
@@ -17,7 +19,11 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 model1 = YOLO('satellite.pt')
-model1.cpu()
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model1.to(device)
+torch.cuda.empty_cache()
+torch.no_grad()
+model1.half()
 
 
 #allowextension function
