@@ -955,6 +955,21 @@
             selectedRectangle.setOptions({ strokeColor: '#00FF00', strokeOpacity: 1.0 });
             map.panTo(selectedRectangle.getBounds().getCenter());
         }
+        
+        function checkForErrors() {
+        fetch("/error-status")
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.message); // Show error message
+                    // Optionally display a modal or update the UI
+                }
+            })
+            .catch(err => console.error("Error checking status:", err));
+    }
+
+    // Poll the server every 5 seconds
+    setInterval(checkForErrors, 5000);
 
         function toggleHighlight(selectedLabel) {
             if (selectedLabel === "None") {
