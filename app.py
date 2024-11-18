@@ -23,7 +23,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model1.to(device)
 torch.cuda.empty_cache()
 torch.no_grad()
-model1.half()
 
 
 #allowextension function
@@ -132,7 +131,7 @@ def perform_detection(image_bytes, bounds):
 
     detected_objects = []
     for result in results:
-        for obj in result.boxes.data.cpu():
+        for obj in result.boxes.data:
             x_min, y_min, x_max, y_max, confidence, class_idx = obj
             confidence=confidence.item()
             label = model1.names[int(class_idx)]
