@@ -1,4 +1,3 @@
 ﻿flask
 ultralytics
 gunicorn
-
