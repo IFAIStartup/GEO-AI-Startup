@@ -17,7 +17,7 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 model1 = YOLO('satellite.pt')
-mode11.cpu()
+model1.cpu()
 
 
 #allowextension function
@@ -119,14 +119,14 @@ def perform_detection(image_bytes, bounds):
 
     image = Image.open(io.BytesIO(image_bytes))
 
-    results = model1(image,imgsz=928,conf=0.30)
+    results = model1(image,imgsz=928,conf=0.35)
 
     north, south, east, west = bounds['north'], bounds['south'], bounds['east'], bounds['west']
     img_width,img_height=image.size
 
     detected_objects = []
     for result in results:
-        for obj in result.boxes.data:
+        for obj in result.boxes.data.cpu():
             x_min, y_min, x_max, y_max, confidence, class_idx = obj
             confidence=confidence.item()
             label = model1.names[int(class_idx)]
