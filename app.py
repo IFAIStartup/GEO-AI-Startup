@@ -8,7 +8,8 @@ import os
 from werkzeug.utils import secure_filename
 from ultralytics import YOLO
 import torch
-
+import time
+import thread
 
 
 
@@ -29,6 +30,18 @@ torch.no_grad()
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+error_flag = {"error_detected": False}
+
+def monitor_logs(log_file_path):
+    with open(log_file_path, "r") as file:
+        file.seek(0, 2)  # Start at the end of the log file
+        while True:
+            line = file.readline()
+            if "Worker (pid:" in line and "SIGKILL" in line:
+                error_flag["error_detected"] = True
+                print("Error detected:", line.strip())
+            time.sleep(1)  # Check every second
 
 GPSINFO_TAG = next(
     tag for tag, name in ExifTags.TAGS.items() if name == "GPSInfo"
@@ -224,7 +237,16 @@ def upload_file():
             
     return render_template('index.html')
 
+@app.route("/error-status", methods=["GET"])
+def error_status():
+    if error_flag["error_detected"]:
+        # Reset the flag after notifying
+        error_flag["error_detected"] = False
+        return jsonify({"error": True, "message": "An error occurred. Please try again."}), 500
+    return jsonify({"error": False}), 200
+
 
 
 if __name__ == '__main__':
+threading.Thread(target=monitor_logs, args=("/path/to/log/file.log",), daemon=True).start()
     app.run()
