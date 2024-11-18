@@ -17,7 +17,7 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 model1 = YOLO('satellite.pt')
-model2=YOLO('360view.pt')
+mode11.cpu()
 
 
 #allowextension function
