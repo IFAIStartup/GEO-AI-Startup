@@ -8,6 +8,7 @@ import os
 from werkzeug.utils import secure_filename
 import torch
 torch.cuda.empty_cache()
+torch.no_grad()
 
 app = Flask(__name__)
 app.secret_key="4TuBbgTs1T8ILHrNOcacw8eLwXZhsaQP"
