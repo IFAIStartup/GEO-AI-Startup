@@ -8,8 +8,6 @@ import os
 from werkzeug.utils import secure_filename
 from ultralytics import YOLO
 import torch
-import time
-import thread
 
 
 
@@ -31,17 +29,6 @@ def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-error_flag = {"error_detected": False}
-
-def monitor_logs(log_file_path):
-    with open(log_file_path, "r") as file:
-        file.seek(0, 2)  # Start at the end of the log file
-        while True:
-            line = file.readline()
-            if "Worker (pid:" in line and "SIGKILL" in line:
-                error_flag["error_detected"] = True
-                print("Error detected:", line.strip())
-            time.sleep(1)  # Check every second
 
 GPSINFO_TAG = next(
     tag for tag, name in ExifTags.TAGS.items() if name == "GPSInfo"
@@ -125,7 +112,7 @@ def detect_objects():
 def fetch_satellite_image(north, south, east, west,zoom):
    
 
-    url = f"https://maps.gomaps.pro/maps/api/staticmap?center={(north+south)/2},{(east+west)/2}&zoom={zoom}&size=928x544&maptype=satellite&key=AlzaSy0AkjtVg-gRrHMD7pDGLISDlkyVxSGHiJb"
+    url = f"https://maps.gomaps.pro/maps/api/staticmap?center={(north+south)/2},{(east+west)/2}&zoom={zoom}&size=928x544&maptype=satellite&key=AlzaSy2eGajaEJKBQ6RMeaASWbYxGv4RpkDDdIp"
     
     response = requests.get(url)
     if response.status_code == 200:
@@ -237,16 +224,7 @@ def upload_file():
             
     return render_template('index.html')
 
-@app.route("/error-status", methods=["GET"])
-def error_status():
-    if error_flag["error_detected"]:
-        # Reset the flag after notifying
-        error_flag["error_detected"] = False
-        return jsonify({"error": True, "message": "An error occurred. Please try again."}), 500
-    return jsonify({"error": False}), 200
-
 
 
 if __name__ == '__main__':
-threading.Thread(target=monitor_logs, args=("/path/to/log/file.log",), daemon=True).start()
     app.run()
