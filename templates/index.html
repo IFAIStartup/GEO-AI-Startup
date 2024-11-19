@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/CSS/main.css" rel="stylesheet">
+    <link href="/static/src/input.css" rel="stylesheet">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,153 +31,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <link rel="icon" href="/static/assets/Logo.png">
     <title>GEO AI Platform</title>
-    <style>
-        a[href^="http://maps.google.com/maps"] {
-            display: none !important
-        }
-
-        a[href^="https://maps.google.com/maps"] {
-            display: none !important
-        }
-
-        .gmnoprint a,
-        .gmnoprint span,
-        .gm-style-cc {
-            display: none;
-        }
-
-        .gmnoprint div {
-            background: none !important;
-        }
-
-        #map {
-            height: 544px;
-            width: 928px;
-        }
-
-        .label {
-            position: absolute;
-            background-color: lightgrey;
-            padding: 3px;
-            font-weight: bold;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            white-space: nowrap;
-            display: block;
-            z-index: 100;
-        }
-
-        #objectsTable {
-            width: 50%;
-            border-collapse: collapse;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-
-        #objectsTable th {
-            background-color: #004bad7f;
-            color: white;
-            padding: 10px;
-            text-align: left;
-        }
-
-
-        #objectsTable td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            cursor: pointer;
-        }
-
-        #objectsTable tr {
-            color: white;
-            cursor: pointer;
-        }
-
-        #objectsTable tr:hover {
-            background-color: white;
-            color: black;
-        }
-
-        .highlight {
-            background-color: #00FF00;
-            color: black;
-        }
-
-        #coordinateForm {
-            display: none;
-        }
-
-
-        #categoryDropdown {
-            background-color: #004bad7f;
-            border: 1px solid white;
-            color: white;
-            font-weight: bold;
-            padding: 8px 10px;
-            border-radius: 7%;
-            margin-top: 15px;
-        }
-
-        #chooselabel {
-            color: white;
-
-        }
-
-        #resultTable {
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .anim {
-            position: absolute;
-            z-index: 10;
-            width: calc(100% + 100px);
-            animation: zoom-move 10s linear;
-        }
-
-        #blur.active,
-        #blur2.active {
-            filter: blur(10px);
-        }
-
-        .HIDDEN {
-            display: none;
-        }
-
-
-
-        @keyframes zoom-move {
-            13.33% {
-                transform: scale(1) translateX(-10px);
-                opacity: 1;
-            }
-
-            36.66% {
-                transform: scale(1.12) translateX(-20px);
-                opacity: 1;
-            }
-
-            66.66% {
-                transform: scale(1.14) translateX(-40px);
-                opacity: 1;
-            }
-
-            80.44% {
-                transform: scale(1.18) translateX(-60px);
-                opacity: 1;
-            }
-
-            100% {
-                transform: scale(1.2) translateX(-80px);
-                opacity: 1;
-            }
-        }
-    </style>
-
 </head>
 
 <body class="w-full bg-[url('static/assets/About.png')] bg-contain">
@@ -281,8 +137,8 @@
                     </div>
                     <!-- Slide 1 -->
                     <div class="carousel-item  h-screen bg-[url('/static/assets/slide1_bg.png')] bg-center bg-cover">
-                        <div class="h-full flex flex-col justify-between lg:space-y-40 md:space-y-24 py-10">
-                            <div class="flex flex-col items-center">
+                        <div class="h-full flex flex-col justify-between lg:space-y-40 md:space-y-32  py-10">
+                            <div class="flex flex-col items-center mt-10 lg:mt-28 md:mt-16">
                                 <h1
                                     class="text-2xl text-white md:text-3xl lg:text-5xl font-Krona md:pb-3  animate__animated  animate__fadeInLeft animate__delay-1s  ">
                                     Technology</h1>
@@ -293,27 +149,27 @@
                             <div class="hidden font-Chela md:flex items-center justify-evenly px-10 text-white">
                                 <div class="text-center">
                                     <p class="text-[#EFCB48]">Python</p>
-                                    <img class="w-36 hover:translate-y-3 transition-all duration-500"
+                                    <img class="lg:w-36 md:w-28 hover:translate-y-3 transition-all duration-500"
                                         src="/static/assets/Python logo.png" alt="" />
                                 </div>
                                 <div class="text-center">
                                     <p class="text-[#7d12f8]">Bootstrap</p>
-                                    <img class="w-36 hover:translate-y-3 transition-all duration-500"
+                                    <img class="lg:w-36 md:w-28 hover:translate-y-3 transition-all duration-500"
                                         src="/static/assets/bootstrap_logo.png" alt="" />
                                 </div>
                                 <div class="text-center">
                                     <p class="text-[#27a562]">Google Map</p>
-                                    <img class="w-36 hover:translate-y-3 transition-all duration-500"
+                                    <img class="lg:w-36 md:w-28 hover:translate-y-3 transition-all duration-500"
                                         src="/static/assets/Google Map logo.png" alt="" />
                                 </div>
                                 <div class="text-center">
                                     <p class="text-[#a9d1ef]">Deep Learning</p>
-                                    <img class="w-36 hover:translate-y-3 transition-all duration-500"
+                                    <img class="lg:w-36 md:w-28 hover:translate-y-3 transition-all duration-500"
                                         src="/static/assets/Deep learning.png" alt="" />
                                 </div>
                             </div> --
                             <!-- mobile view -->
-                            <div class="flex justify-between pt-14 px-10 text-white md:hidden">
+                            <div class="flex justify-between pb-5 px-10 text-white md:hidden">
                                 <div class="font-Chela">
                                     <div class="flex flex-col justify-center items-center">
                                         <img class="w-20" src="/static/assets/Python logo.png" alt="" />
@@ -346,26 +202,26 @@
                                     <div class="flex flex-col items-center text-center text-white">
                                         <img class="md:w-44 lg:w-60" src="/static/assets/Logo.png" alt="">
                                         <p
-                                            class="uppercase font-Poppins lg:text-base text-[#32b7ff] animate__animated  animate__fadeInLeft animate__delay-1s">
+                                            class="uppercase font-Poppins text-base text-[#32b7ff] animate__animated  animate__fadeInLeft animate__delay-1s">
                                             innovation floor</p>
                                         <h2
-                                            class="uppercase font-Marcellus lg:text-4xl animate__animated  animate__fadeInRight animate__delay-1s">
+                                            class="uppercase font-Marcellus lg:text-4xl md:text-3xl animate__animated  animate__fadeInRight animate__delay-1s">
                                             AI STARTUP</h2>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between h-full">
-                                    <div class="absolute top-56 lg:top-44 md:left-16 lg:left-20">
+                                    <div class="absolute top-56 lg:top-44 md:left-16 lg:left-28">
                                         <img class="md:w-52 lg:w-72" src="/static/assets/slide2_letter.png">
 
                                     </div>
-                                    <div class="absolute md:top-28 lg:top-32 lg:mx-3 md:right-16 md:mx-2 lg:right-20">
+                                    <div class="absolute md:top-28 lg:top-32 lg:mx-3 md:right-16 md:mx-2 lg:right-28">
                                         <img class="md:w-44 w-60 lg:w-52" src="/static/assets/Robot-PNG-Image-HD.png">
                                     </div>
                                 </div>
                             </div>
                             <!-- Mobile View -->
                             <div
-                                class=" md:hidden h-full flex flex-col    justify-between space-y-5 py-3 items-center  ">
+                                class=" md:hidden h-full flex flex-col   justify-between space-y-5 py-3 items-center  ">
 
                                 <div
                                     class=" flex flex-col items-center font-Poppins uppercase text-center  text-white mt-10">
@@ -396,9 +252,10 @@
                             <div
                                 class="mt-2 h-[27vh] mx-4 px-2 transition-all duration-200 hover:-translate-y-3 hover:shadow-2xl flex flex-col justify-center  border-0 rounded-lg shadow-xl md:w-[50%] lg:w-[50%] xl:w-[30%] md:leading-loose md:h-[35vh] cursor-pointer overflow-hidden bg-black bg-opacity-50">
                                 <h1
-                                    class=" text-center md:pb-3 font-bold text-3xl text-white font-RocknRoll uppercase md:text-5xl ">
+                                    class=" text-center md:pb-3 font-bold text-3xl lg:text-4xl text-white font-RocknRoll uppercase">
                                     Object detection</h1>
-                                <h3 class=" text-2xl text-yellow-400 text-center font-josefin">With Corresponding
+                                <h3 class=" text-2xl lg:text-3xl text-yellow-400 text-center font-josefin">With
+                                    Corresponding
                                     Coordinates
                                 </h3>
                             </div>
@@ -475,7 +332,7 @@
                 <div class=" h-full flex flex-col items-center">
                     <div class="flex">
                         <a onclick="toggle()" id="loginBtn"
-                            class=" bg-[#004bad7f] hover:bg-blue-700 text-white font-bold py-2 px-2 mx-2 md:px-4 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md mt-12"
+                            class=" bg-[#004bad7f] hover:bg-blue-700 text-white font-bold py-2 px-2  md:px-4 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md mt-6"
                             href="#login"> Login to detect
                         </a>
                         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -491,19 +348,19 @@
                             document.querySelector("#logoutBtn2").style.display = 'block'
                         </script>
                         <button id="detectButton2"
-                            class="bg-[#004bad7f] hover:bg-blue-700  text-white font-bold py-2 px-4 mx-4 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md mt-1">
+                            class="bg-[#004bad7f] hover:bg-blue-700  text-white font-bold py-2 px-3 mx-1  my-2 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md">
                             Detect
                         </button>
                         <button id="detectButton1"
-                            class="bg-[#004bad7f] hidden hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md mt-1">
+                            class="bg-[#004bad7f] hidden hover:bg-blue-700 text-white font-bold py-2 px-3  my-2 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md">
                             Detect
                         </button>
                         <button id="satelliteButton"
-                            class="bg-[#004bad7f] hidden hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md mt-1">
+                            class="bg-[#004bad7f] hidden hover:bg-blue-700 text-white font-bold py-2 px-3 mx-2 my-2 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md">
                             Satellite
                         </button>
                         <button id="removeButton"
-                            class="bg-[#004bad7f] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md mt-1">
+                            class="bg-[#004bad7f] hover:bg-blue-700 text-white font-bold py-2 px-3 mx-1 my-2  border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md">
                             Remove
                         </button>
                         {% endif %}
@@ -511,25 +368,35 @@
                         {% endif %}
                         {% endwith %}
                     </div>
-                    <div id="upload">
+                    <div id="upload" class="flex items-center justify-evenly mt-3">
                         <form id="uploadForm" enctype="multipart/form-data">
                             <label id="chooselabel"
-                                class="md:mb-4 border-2 border-white border-solid hover:bg-[#004bad7f]  px-6 py-2 mt-1 rounded-full md:mt-2 transform transition duration-500 shadow-md"
+                                class="md:mb-4 border-2 border-white border-solid hover:bg-[#004bad7f]  px-4 py-2 my-2 mx-2 rounded-full md:mt-2 transform transition duration-500 shadow-md"
                                 for="fileInput">Choose</label>
                             <input id="fileInput" type="file" name="file" class="hidden">
                             <button
-                                class="bg-[#004bad7f] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 mt-1 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md"
-                                type="submit" id="upload" value="submit">Upload</button>
-                        </form>
-                        <form id="coordinateForm"
-                            class="bg-[#004bad7f] text-white font-bold py-2 px-4 mx-4 border border-blue-700 rounded md:mx-14 transform transition duration-500 shadow-md mt-5">
-                            <label for="latitude">Latitude:</label>
-                            <input class="rounded text-black" type="text" id="latitude" name="latitude" required>
-                            <label for="longitude">Longitude:</label>
-                            <input class="rounded text-black" type="text" id="longitude" name="longitude" required>
-                            <button type="submit">Submit</button>
+                                class="bg-[#004bad7f] hover:bg-blue-700 text-white font-bold py-2 px-4 my-2 mx-2 border border-blue-700 rounded-full md:mx-14 transform transition duration-500 shadow-md"
+                                type="submit" value="submit">Upload</button>
                         </form>
                     </div>
+                    <form id="coordinateForm">
+                        <div
+                            class=" bg-[#004bad7f] text-white font-bold border px-4 py-3 mb-10 border-blue-700 rounded-lg md:mx-14 transform transition duration-500 shadow-md mt-3">
+                            <div class="my-2">
+                                <label for="latitude">Latitude:</label>
+                                <input class="rounded text-black ml-[15px]" type="text" id="latitude" name="latitude"
+                                    required>
+                            </div>
+                            <div class="my-2">
+                                <label for="longitude">Longitude:</label>
+                                <input class="rounded text-black" type="text" id="longitude" name="longitude" required>
+                            </div>
+                            <div class="flex justify-center">
+                                <button type="submit"
+                                    class="border-2 text-white rounded-full py-1 px-2 mt-3">Submit</button>
+                            </div>
+                        </div>
+                    </form>
                     <div id="labelsContainer"></div>
                     <div id="resultTable" class="w-full mt-5 px-2">
                         <table id="objectsTable">
@@ -578,16 +445,17 @@
                             {% endwith %}
 
                             <div>
-                                <label for="email" class="md:mb-2  text-white text-lg">Email</label>
-                                <input id="email"
+                                <label for="email2" class="md:mb-2  text-white text-lg">Email</label>
+                                <input id="email2"
                                     class=" form-control border  shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                                     type="email" name="email" placeholder="Email" required />
                             </div>
                             <div>
-                                <label for="password" class=" md:mb-2 text-white text-lg">Password</label>
-                                <input id="password"
+                                <label for="password2" class=" md:mb-2 text-white text-lg">Password</label>
+                                <input id="password2"
                                     class="form-control border shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
-                                    type="password" name="password" placeholder="Password" required />
+                                    type="password" autocomplete="off" name="password" placeholder="Password"
+                                    required />
                             </div>
                             <button id="log"
                                 class="bg-[#004bad7f] border-1 border-[#32b7ff] shadow-lg mt-4  text-white rounded-lg py-2 w-full hover:scale-105  transition duration-300 ease-in-out"
@@ -656,16 +524,17 @@
                             {% endwith %}
 
                             <div>
-                                <label for="email" class="mb-2  text-white text-lg">Email</label>
-                                <input id="email"
+                                <label for="email1" class="mb-2  text-white text-lg">Email</label>
+                                <input id="email1"
                                     class="form-control border  shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                                     type="email" name="email" placeholder="Email" required />
                             </div>
                             <div>
-                                <label for="password" class="mb-2 text-white text-lg"> Password</label>
-                                <input id="password"
+                                <label for="password1" class="mb-2 text-white text-lg"> Password</label>
+                                <input id="password1"
                                     class="form-control border  shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
-                                    type="password" name="password" placeholder="Create Password" required />
+                                    type="password" autocomplete="off" name="password" placeholder="Create Password"
+                                    required />
                             </div>
                             <button
                                 class="bg-[#004bad7f] border-1 border-[#32b7ff] shadow-lg mt-4 py-2 w-full text-white rounded-lg  hover:scale-105 hover:from-black hover:to-blue-500 transition duration-300 ease-in-out"
@@ -859,6 +728,7 @@
                             draggable: false,
                             strokeColor: "#C309FA",
                             strokeWeight: 2,
+                            zIndex : 90,
                             map: map,
                         });
 
@@ -955,7 +825,7 @@
             selectedRectangle.setOptions({ strokeColor: '#00FF00', strokeOpacity: 1.0 });
             map.panTo(selectedRectangle.getBounds().getCenter());
         }
-        
+
 
         function toggleHighlight(selectedLabel) {
             if (selectedLabel === "None") {

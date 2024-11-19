@@ -1,3 +1,145 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a[href^="http://maps.google.com/maps"] {
+    display: none !important
+}
+
+a[href^="https://maps.google.com/maps"] {
+    display: none !important
+}
+
+.gmnoprint a,
+.gmnoprint span,
+.gm-style-cc {
+    display: none;
+}
+
+.gmnoprint div {
+    background: none !important;
+}
+
+#map {
+    height: 544px;
+    width: 928px;
+}
+
+.label {
+    position: absolute;
+    background-color: lightgrey;
+    padding: 3px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    white-space: nowrap;
+    display: block;
+    z-index: 100;
+}
+
+#objectsTable {
+    width: 50%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+#objectsTable th {
+    background-color: #004bad7f;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+
+#objectsTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    cursor: pointer;
+}
+
+#objectsTable tr {
+    color: white;
+    cursor: pointer;
+}
+
+#objectsTable tr:hover {
+    background-color: white;
+    color: black;
+}
+
+.highlight {
+    background-color: #00FF00;
+    color: black;
+}
+
+#coordinateForm {
+    display: none;
+}
+
+
+#categoryDropdown {
+    background-color: #004bad7f;
+    border: 1px solid white;
+    color: white;
+    font-weight: bold;
+    padding: 8px 10px;
+    border-radius: 7%;
+    margin-top: 15px;
+}
+
+#chooselabel {
+    color: white;
+
+}
+
+#resultTable {
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.anim {
+    position: absolute;
+    z-index: 10;
+    width: calc(100% + 100px);
+    animation: zoom-move 10s linear;
+}
+
+#blur.active,
+#blur2.active {
+    filter: blur(10px);
+}
+
+.HIDDEN {
+    display: none;
+}
+
+
+
+@keyframes zoom-move {
+    13.33% {
+        transform: scale(1) translateX(-10px);
+        opacity: 1;
+    }
+
+    36.66% {
+        transform: scale(1.12) translateX(-20px);
+        opacity: 1;
+    }
+
+    66.66% {
+        transform: scale(1.14) translateX(-40px);
+        opacity: 1;
+    }
+
+    80.44% {
+        transform: scale(1.18) translateX(-60px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.2) translateX(-80px);
+        opacity: 1;
+    }
+}

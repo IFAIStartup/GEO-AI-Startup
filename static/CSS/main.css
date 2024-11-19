@@ -558,10 +558,6 @@ video {
   visibility: visible;
 }
 
-.collapse {
-  visibility: collapse;
-}
-
 .fixed {
   position: fixed;
 }
@@ -615,6 +611,11 @@ video {
   margin-right: -0.5rem;
 }
 
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -630,24 +631,33 @@ video {
   margin-right: 1rem;
 }
 
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
 
-.mt-1 {
-  margin-top: 0.25rem;
+.ml-\[15px\] {
+  margin-left: 15px;
 }
 
 .mt-10 {
   margin-top: 2.5rem;
 }
 
-.mt-12 {
-  margin-top: 3rem;
-}
-
 .mt-2 {
   margin-top: 0.5rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
 }
 
 .mt-36 {
@@ -660,6 +670,10 @@ video {
 
 .mt-5 {
   margin-top: 1.25rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
 }
 
 .block {
@@ -745,10 +759,6 @@ video {
 
 .max-w-full {
   max-width: 100%;
-}
-
-.border-collapse {
-  border-collapse: collapse;
 }
 
 .transform {
@@ -1011,14 +1021,14 @@ video {
   padding-right: 0.5rem;
 }
 
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-.px-6 {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
 }
 
 .py-1 {
@@ -1050,6 +1060,10 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.pb-5 {
+  padding-bottom: 1.25rem;
+}
+
 .pl-40 {
   padding-left: 10rem;
 }
@@ -1060,10 +1074,6 @@ video {
 
 .pt-10 {
   padding-top: 2.5rem;
-}
-
-.pt-14 {
-  padding-top: 3.5rem;
 }
 
 .pt-2 {
@@ -1131,6 +1141,11 @@ video {
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .text-lg {
@@ -1233,10 +1248,6 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-.filter {
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
 .transition {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -1277,6 +1288,142 @@ video {
 
 .ease-out {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+
+a[href^="http://maps.google.com/maps"] {
+  display: none !important
+}
+
+a[href^="https://maps.google.com/maps"] {
+  display: none !important
+}
+
+.gmnoprint a,
+.gmnoprint span,
+.gm-style-cc {
+  display: none;
+}
+
+.gmnoprint div {
+  background: none !important;
+}
+
+#map {
+  height: 544px;
+  width: 928px;
+}
+
+.label {
+  position: absolute;
+  background-color: lightgrey;
+  padding: 3px;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  white-space: nowrap;
+  display: block;
+  z-index: 100;
+}
+
+#objectsTable {
+  width: 50%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#objectsTable th {
+  background-color: #004bad7f;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+#objectsTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  cursor: pointer;
+}
+
+#objectsTable tr {
+  color: white;
+  cursor: pointer;
+}
+
+#objectsTable tr:hover {
+  background-color: white;
+  color: black;
+}
+
+.highlight {
+  background-color: #00FF00;
+  color: black;
+}
+
+#coordinateForm {
+  display: none;
+}
+
+#categoryDropdown {
+  background-color: #004bad7f;
+  border: 1px solid white;
+  color: white;
+  font-weight: bold;
+  padding: 8px 10px;
+  border-radius: 7%;
+  margin-top: 15px;
+}
+
+#chooselabel {
+  color: white;
+}
+
+#resultTable {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.anim {
+  position: absolute;
+  z-index: 10;
+  width: calc(100% + 100px);
+  animation: zoom-move 10s linear;
+}
+
+#blur.active,
+#blur2.active {
+  filter: blur(10px);
+}
+
+.HIDDEN {
+  display: none;
+}
+
+@keyframes zoom-move {
+  13.33% {
+    transform: scale(1) translateX(-10px);
+    opacity: 1;
+  }
+
+  36.66% {
+    transform: scale(1.12) translateX(-20px);
+    opacity: 1;
+  }
+
+  66.66% {
+    transform: scale(1.14) translateX(-40px);
+    opacity: 1;
+  }
+
+  80.44% {
+    transform: scale(1.18) translateX(-60px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.2) translateX(-80px);
+    opacity: 1;
+  }
 }
 
 .placeholder\:text-base::-moz-placeholder {
@@ -1401,6 +1548,10 @@ video {
     margin-top: 2.5rem;
   }
 
+  .md\:mt-16 {
+    margin-top: 4rem;
+  }
+
   .md\:mt-2 {
     margin-top: 0.5rem;
   }
@@ -1439,6 +1590,10 @@ video {
 
   .md\:w-12 {
     width: 3rem;
+  }
+
+  .md\:w-28 {
+    width: 7rem;
   }
 
   .md\:w-44 {
@@ -1491,10 +1646,10 @@ video {
     margin-bottom: calc(5rem * var(--tw-space-y-reverse));
   }
 
-  .md\:space-y-24 > :not([hidden]) ~ :not([hidden]) {
+  .md\:space-y-32 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-y-reverse: 0;
-    margin-top: calc(6rem * calc(1 - var(--tw-space-y-reverse)));
-    margin-bottom: calc(6rem * var(--tw-space-y-reverse));
+    margin-top: calc(8rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(8rem * var(--tw-space-y-reverse));
   }
 
   .md\:overflow-hidden {
@@ -1593,12 +1748,12 @@ video {
 }
 
 @media (min-width: 1024px) {
-  .lg\:left-20 {
-    left: 5rem;
+  .lg\:left-28 {
+    left: 7rem;
   }
 
-  .lg\:right-20 {
-    right: 5rem;
+  .lg\:right-28 {
+    right: 7rem;
   }
 
   .lg\:top-32 {
@@ -1618,12 +1773,20 @@ video {
     margin-top: 6rem;
   }
 
+  .lg\:mt-28 {
+    margin-top: 7rem;
+  }
+
   .lg\:mt-5 {
     margin-top: 1.25rem;
   }
 
   .lg\:flex {
     display: flex;
+  }
+
+  .lg\:w-36 {
+    width: 9rem;
   }
 
   .lg\:w-52 {
@@ -1731,6 +1894,11 @@ video {
     line-height: 2rem;
   }
 
+  .lg\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
   .lg\:text-4xl {
     font-size: 2.25rem;
     line-height: 2.5rem;
@@ -1744,11 +1912,6 @@ video {
   .lg\:text-6xl {
     font-size: 3.75rem;
     line-height: 1;
-  }
-
-  .lg\:text-base {
-    font-size: 1rem;
-    line-height: 1.5rem;
   }
 }
 
