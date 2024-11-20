@@ -1,5 +1,4 @@
 flask
 pillow
-PIL
 requests
 sqlite3
