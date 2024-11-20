@@ -5,16 +5,9 @@ from flask import Flask, render_template, request, jsonify,flash,redirect,url_fo
 import sqlite3
 import os
 from werkzeug.utils import secure_filename
-import subprocess
+from ultralytics import YOLO
+import torch
 
-# Check if ultralytics is installed
-try:
-    from ultralytics import YOLO
-except ImportError:
-    # Install ultralytics if not found
-    print("Installing ultralytics...")
-    subprocess.check_call([os.sys.executable, "-m", "pip", "install", "ultralytics"])
-    from ultralytics import YOLO
 
 
 
@@ -25,7 +18,8 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 model1 = YOLO('satellite.pt')
-model1.cpu()
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model1.to(device)
 
 
 #allowextension function
