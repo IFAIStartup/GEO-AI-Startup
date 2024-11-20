@@ -1,3 +1,6 @@
 flask
 pillow
-
+io
+os
+subprocess
+PIL
