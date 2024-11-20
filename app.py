@@ -4,6 +4,7 @@ import requests
 from flask import Flask, render_template, request, jsonify,flash,redirect,url_for,session
 import sqlite3
 import os
+import psutil
 from werkzeug.utils import secure_filename
 from ultralytics import YOLO
 import torch
@@ -14,6 +15,7 @@ import torch
 app = Flask(__name__)
 app.secret_key="4TuBbgTs1T8ILHrNOcacw8eLwXZhsaQP"
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
+error_flag= {"error_detected":False}
 
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -38,6 +40,24 @@ def decimal_coords(coords, ref):
     if ref == "S" or ref =='W' :
         decimal_degrees = -1 * decimal_degrees
     return decimal_degrees
+
+
+def check_memory():
+    process=psutil.Process(os.getpid())
+    memory_usage=process.memory_info().rss / (1024 * 1024)
+    print(memory_usage)
+    if memory_usage > 307.2:
+        error_flag["error_detected"]=True
+
+
+@app.route("/error-status",methods=['GET'])
+def error_status():
+    check_memory()
+    if error_flag['error_detected']:
+        error_flag['error_detected']=False
+        
+        return jsonify({"error":True,"message":"Try again"}), 500
+    return jsonify({"error":False}),200
 
 @app.route('/')
 def index():

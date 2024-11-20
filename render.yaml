@@ -1,0 +1,7 @@
+services:
+  - type: web
+    runtime: python
+    name: GEO-AI
+    repo: https://github.com/IFAIStartup/GEO-AI-Startup
+    branch: main
+    maxShutdownDelaySeconds: 120

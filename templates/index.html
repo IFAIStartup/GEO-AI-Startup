@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/CSS/main.css" rel="stylesheet">
     <link href="/static/src/input.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -322,10 +324,17 @@
 
 
             <!-- Map -->
-            <div id="EXPLORE" class="w-full md:h-full md:overflow-hidden overflow-x-scroll">
-                <div class=" h-full flex flex-col items-center">
-                    <div id="map">
+            <div id="EXPLORE" class="w-full md:h-full relative">
+                <div id="loadingPng" class="z-50 h-full w-full absolute hidden">
+                    <div class="flex items-center justify-center h-[544px]">
+                        <img class="w-10" src="/static/assets/loading-waiting.gif">
                     </div>
+                </div>
+                <div class="flex flex-col h-full items-center  md:overflow-hidden overflow-x-scroll">
+                    <!-- <div class="relative z-50 border-2 "> -->
+                <!-- </div> -->
+                     <div id="map"> 
+                     </div>
                 </div>
             </div>
             <div id="RESULT" class="w-full h-full">
@@ -597,6 +606,7 @@
             });
 
             document.getElementById('detectButton2').addEventListener('click', detectObjects);
+            document.getElementById('detectButton2').addEventListener('click', checkForErrors);
             document.getElementById('removeButton').addEventListener('click', removeAll);
 
             streetViewPanorama = new google.maps.StreetViewPanorama(document.getElementById('map'), {
@@ -658,7 +668,14 @@
                 })
                     .then((response) => response.json())
                     .then((data) => {
-                        alert(data.message);
+        
+                        Toastify({
+                            text: data.message,
+                            duration: 5000,
+                            gravity: "top",
+                            position: "center",
+                            backgroundColor: "#f44336", // Red color for error
+                        }).showToast();
                         const detectcoords = data.objects;
 
                         detectcoords.forEach((obj) => {
@@ -680,6 +697,7 @@
         });
 
         function detectObjects() {
+            document.getElementById('loadingPng').style.display='block';
             const bounds = rectangle.getBounds();
             const northEast = bounds.getNorthEast();
             const southWest = bounds.getSouthWest();
@@ -704,6 +722,7 @@
 
                     document.getElementById('tableBody').innerHTML = '';
                     document.getElementById('labelsContainer').innerHTML = '';
+                    document.getElementById('loadingPng').style.display='none';
 
                     rectlabel.forEach(labelrec => labelrec.remove());
                     rectangles.forEach(rectangle => rectangle.setMap(null));
@@ -813,6 +832,26 @@
             document.getElementById('coordinateForm').style.display = 'none';
             document.getElementById('removeButton').style.display = 'none';
         }
+        
+        function checkForErrors() {
+            fetch("/error-status")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('loadingPng').style.display='none';
+                        Toastify({
+                            text: data.message,
+                            duration: 5000,
+                            gravity: "top",
+                            position: "center",
+                            backgroundColor: "#f44336", // Red color for error
+                        }).showToast();
+                    }
+                })
+                .catch(err => console.error("Error checking status:", err));
+        }
+
+
 
         function highlightRectangle(index) {
 
