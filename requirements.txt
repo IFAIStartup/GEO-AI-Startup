@@ -5,4 +5,4 @@ os
 subprocess
 PIL
 requests
-sqllite3
+sqlite3
