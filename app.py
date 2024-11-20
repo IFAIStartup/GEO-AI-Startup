@@ -46,7 +46,7 @@ def check_memory():
     process=psutil.Process(os.getpid())
     memory_usage=process.memory_info().rss / (1024 * 1024)
     print(memory_usage)
-    if memory_usage > 300:
+    if memory_usage > 410.15:
         error_flag["error_detected"]=True
 
 
