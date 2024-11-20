@@ -1,3 +1,3 @@
-﻿flask
-ultralytics
-gunicorn
+flask
+pillow
+requests
