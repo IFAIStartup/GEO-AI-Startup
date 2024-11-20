@@ -1,6 +1,5 @@
 flask
 pillow
-subprocess
 PIL
 requests
 sqlite3
