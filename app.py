@@ -46,7 +46,7 @@ def check_memory():
     process=psutil.Process(os.getpid())
     memory_usage=process.memory_info().rss / (1024 * 1024)
     print(memory_usage)
-    if memory_usage > 307.2:
+    if memory_usage > 300:
         error_flag["error_detected"]=True
 
 
@@ -57,7 +57,7 @@ def error_status():
         error_flag['error_detected']=False
         
         return jsonify({"error":True,"message":"Try again"}), 500
-    return jsonify({"error":False}),200
+    return jsonify({"error":False}), 200
 
 @app.route('/')
 def index():
