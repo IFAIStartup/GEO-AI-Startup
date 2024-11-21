@@ -171,7 +171,7 @@ def perform_detection(image_bytes, bounds):
                 obj_lat = (obj_north + obj_south) / 2
                 obj_lng = (obj_east + obj_west) / 2
 
-                detected_objects.append({
+        detected_objects.append({
                    'name': label,
                    'type': label,
                    'conf': confidence,
@@ -182,7 +182,7 @@ def perform_detection(image_bytes, bounds):
                     'lat': obj_lat,
                     'lng': obj_lng
                })
-
+        
         return {'objects': detected_objects}
     except Exception as e:
         print(f"Error: {e}")
