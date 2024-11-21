@@ -19,9 +19,9 @@ error_flag= {"error_detected":False}
 
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-model1 = YOLO('satellite.pt')
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model1.to(device)
+model1 = YOLO('satellite.pt')
 
 
 #allowextension function
@@ -46,7 +46,7 @@ def check_memory():
     process=psutil.Process(os.getpid())
     memory_usage=process.memory_info().rss / (1024 * 1024)
     print(memory_usage)
-    if memory_usage > 398:
+    if memory_usage > 390:
         error_flag["error_detected"]=True
 
 
