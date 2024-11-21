@@ -7,8 +7,6 @@ import os
 import psutil
 from werkzeug.utils import secure_filename
 from ultralytics import YOLO
-import torch
-import torch.multiprocessing as mp
 import gc
 
 
@@ -21,8 +19,7 @@ error_flag= {"error_detected":False}
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 model1 = YOLO('satellite.pt')
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model1.to(device)
+model1.cpu()
 
 
 
@@ -189,8 +186,6 @@ def perform_detection(image_bytes, bounds):
         print(f"Error: {e}")
     finally:
         del results
-        torch.cuda.empty_cache()
-        torch.cuda.ipc_collect()
         gc.collect()
 
 #360 image function
@@ -257,5 +252,4 @@ def upload_file():
 
 
 if __name__ == '__main__':
-    mp.set_start_method("spawn", force=True)
     app.run()
