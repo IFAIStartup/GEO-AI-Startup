@@ -45,7 +45,6 @@ def decimal_coords(coords, ref):
 def check_memory():
     process=psutil.Process(os.getpid())
     memory_usage=process.memory_info().rss / (1024 * 1024)
-    print(memory_usage)
     if memory_usage > 390:
         error_flag["error_detected"]=True
 
@@ -57,7 +56,7 @@ def error_status():
         error_flag['error_detected']=False
         
         return jsonify({"error":True,"message":"Try again"}), 500
-    return jsonify({"error":False}), 200
+    return render_template('index.html') 
 
 @app.route('/')
 def index():
