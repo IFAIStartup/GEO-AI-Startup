@@ -57,7 +57,7 @@ def error_status():
         error_flag['error_detected']=False
         
         return jsonify({"error":True,"message":"Try again"}), 500
-    return jsonify({"error":False}), 200
+    return render_template('index.html')
 
 @app.route('/')
 def index():
