@@ -35,7 +35,7 @@ GPSINFO_TAG = next(
     tag for tag, name in ExifTags.TAGS.items() if name == "GPSInfo"
 )
 
-device = next(model.model.parameters()).device
+device = next(model1.model.parameters()).device
 print(f"Model is running on: {device}")
 
 
