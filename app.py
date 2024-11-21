@@ -189,8 +189,8 @@ def perform_detection(image_bytes, bounds):
         print(f"Error: {e}")
     finally:
         del results
-        #torch.cuda.empty_cache()
-        #torch.cuda.ipc_collect()
+        torch.cuda.empty_cache()
+        torch.cuda.ipc_collect()
         gc.collect()
 
 #360 image function
