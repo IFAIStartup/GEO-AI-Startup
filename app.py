@@ -8,7 +8,7 @@ import psutil
 from werkzeug.utils import secure_filename
 from ultralytics import YOLO
 import torch
-
+import gc
 
 
 
@@ -33,6 +33,10 @@ def allowed_file(filename):
 GPSINFO_TAG = next(
     tag for tag, name in ExifTags.TAGS.items() if name == "GPSInfo"
 )
+
+device = next(model.model.parameters()).device
+print(f"Model is running on: {device}")
+
 
 #image coordinates cal
 def decimal_coords(coords, ref):
@@ -138,47 +142,55 @@ def fetch_satellite_image(north, south, east, west,zoom):
         raise Exception("Failed to fetch satellite image")
 
 def perform_detection(image_bytes, bounds):
+    try:
+        image = Image.open(io.BytesIO(image_bytes))
 
-    image = Image.open(io.BytesIO(image_bytes))
+        results = model1(image,imgsz=928,conf=0.35)
 
-    results = model1(image,imgsz=928,conf=0.35)
+        north, south, east, west = bounds['north'], bounds['south'], bounds['east'], bounds['west']
+        img_width,img_height=image.size
 
-    north, south, east, west = bounds['north'], bounds['south'], bounds['east'], bounds['west']
-    img_width,img_height=image.size
-
-    detected_objects = []
-    for result in results:
-        for obj in result.boxes.data:
-            x_min, y_min, x_max, y_max, confidence, class_idx = obj
-            confidence=confidence.item()
-            label = model1.names[int(class_idx)]
+        detected_objects = []
+        for result in results:
+            for obj in result.boxes.data:
+                x_min, y_min, x_max, y_max, confidence, class_idx = obj
+                confidence=confidence.item()
+                label = model1.names[int(class_idx)]
             
-            rel_x_min, rel_x_max = x_min.item() / img_width, x_max.item() / img_width
-            rel_y_min, rel_y_max = y_min.item() / img_height, y_max.item() / img_height
+                rel_x_min, rel_x_max = x_min.item() / img_width, x_max.item() / img_width
+                rel_y_min, rel_y_max = y_min.item() / img_height, y_max.item() / img_height
 
         
-            obj_north = north + rel_y_min * (south-north)
-            obj_south = north + rel_y_max * (south -north)
-            obj_west = west + rel_x_min * (east - west)
-            obj_east = west + rel_x_max * (east - west)
+                 obj_north = north + rel_y_min * (south-north)
+                 obj_south = north + rel_y_max * (south -north)
+                 obj_west = west + rel_x_min * (east - west)
+                 obj_east = west + rel_x_max * (east - west)
 
        
-            obj_lat = (obj_north + obj_south) / 2
-            obj_lng = (obj_east + obj_west) / 2
+                 obj_lat = (obj_north + obj_south) / 2
+                 obj_lng = (obj_east + obj_west) / 2
 
-            detected_objects.append({
-                'name': label,
-                'type': label,
-                'conf': confidence,
-                'north': obj_north,
-                'south': obj_south,
-                'east': obj_east,
-                'west': obj_west,
-                'lat': obj_lat,
-                'lng': obj_lng
-            })
+                detected_objects.append({
+                   'name': label,
+                   'type': label,
+                   'conf': confidence,
+                  'north': obj_north,
+                  'south': obj_south,
+                   'east': obj_east,
+                   'west': obj_west,
+                    'lat': obj_lat,
+                    'lng': obj_lng
+               })
 
-    return {'objects': detected_objects}
+        return {'objects': detected_objects}
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        del results
+        torch.cuda.empty_cache()
+        torch.cuda.ipc_collect()
+        gc.collect()
+        check_memory() 
 
 #360 image function
 @app.route('/360-detect', methods=['POST'])
