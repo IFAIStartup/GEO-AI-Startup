@@ -162,14 +162,14 @@ def perform_detection(image_bytes, bounds):
                 rel_y_min, rel_y_max = y_min.item() / img_height, y_max.item() / img_height
 
         
-                 obj_north = north + rel_y_min * (south-north)
-                 obj_south = north + rel_y_max * (south -north)
-                 obj_west = west + rel_x_min * (east - west)
-                 obj_east = west + rel_x_max * (east - west)
+                obj_north = north + rel_y_min * (south-north)
+                obj_south = north + rel_y_max * (south -north)
+                obj_west = west + rel_x_min * (east - west)
+                obj_east = west + rel_x_max * (east - west)
 
        
-                 obj_lat = (obj_north + obj_south) / 2
-                 obj_lng = (obj_east + obj_west) / 2
+                obj_lat = (obj_north + obj_south) / 2
+                obj_lng = (obj_east + obj_west) / 2
 
                 detected_objects.append({
                    'name': label,
