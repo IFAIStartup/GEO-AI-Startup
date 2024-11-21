@@ -8,6 +8,7 @@ import psutil
 from werkzeug.utils import secure_filename
 from ultralytics import YOLO
 import torch
+import torch.multiprocessing as mp
 import gc
 
 
@@ -61,7 +62,7 @@ def error_status():
         error_flag['error_detected']=False
         
         return jsonify({"error":True,"message":"Try again"}), 500
-    return render_template('index.html')
+    return jsonify({"error":False}), 200
 
 @app.route('/')
 def index():
@@ -171,7 +172,7 @@ def perform_detection(image_bytes, bounds):
                 obj_lat = (obj_north + obj_south) / 2
                 obj_lng = (obj_east + obj_west) / 2
 
-        detected_objects.append({
+                detected_objects.append({
                    'name': label,
                    'type': label,
                    'conf': confidence,
@@ -188,10 +189,9 @@ def perform_detection(image_bytes, bounds):
         print(f"Error: {e}")
     finally:
         del results
-        torch.cuda.empty_cache()
-        torch.cuda.ipc_collect()
+        #torch.cuda.empty_cache()
+        #torch.cuda.ipc_collect()
         gc.collect()
-        check_memory() 
 
 #360 image function
 @app.route('/360-detect', methods=['POST'])
@@ -257,4 +257,5 @@ def upload_file():
 
 
 if __name__ == '__main__':
+    mp.set_start_method("spawn", force=True)
     app.run()
