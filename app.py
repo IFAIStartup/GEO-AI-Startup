@@ -132,7 +132,7 @@ def detect_objects():
 def fetch_satellite_image(north, south, east, west,zoom):
    
 
-    url = f"https://maps.gomaps.pro/maps/api/staticmap?center={(north+south)/2},{(east+west)/2}&zoom={zoom}&size=928x544&maptype=satellite&key=AlzaSyXQCcuybSgoT_10-RAVIxr-oGbhVLc3-rl"
+    url = f"https://maps.gomaps.pro/maps/api/staticmap?center={(north+south)/2},{(east+west)/2}&zoom={zoom}&size=928x544&maptype=satellite&key=AlzaSyOzVaXq8DrJ9SK82O_43LNCLyRpJdrjIXs"
     
     response = requests.get(url)
     if response.status_code == 200:
